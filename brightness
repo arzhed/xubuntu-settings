@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# constants - edit as required
+UPPER=100
+LOWER=0
+INCREMENT=10
+DECREMENT=10
+
+# current xbacklight value
+CURRENT=`xbacklight -get | sed -e 's/\..*//g'`
+NEW=$CURRENT
+
+case $1 in
+	up)
+		if [ $(($CURRENT+$INCREMENT)) -le $UPPER ]; then
+			NEW=$(($CURRENT+$INCREMENT))
+		fi
+	;;
+	down)
+		if [ $(($CURRENT-$DECREMENT)) -ge $LOWER ]; then
+			NEW=$(($CURRENT-$DECREMENT))
+		fi
+	;;
+	*)
+	;;
+esac
+
+# set the new backlight
+xbacklight -set $NEW
+
+exit 0
